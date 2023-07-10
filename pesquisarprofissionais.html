@@ -1,0 +1,239 @@
+﻿<!doctype html>
+<html>
+<head>
+
+<link rel="stylesheet" href="index.css"/>
+<meta charset="UTF-8">
+<title>Pesquisar Profissional</title>
+
+</head>
+
+<body id="corpo">
+
+<script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCRHDyxKv5kY3aq5LzLNlwrjqAxbtCEzuw",
+    authDomain: "salao15mingeral.firebaseapp.com",
+    databaseURL: "https://salao15mingeral.firebaseio.com",
+    projectId: "salao15mingeral",
+    storageBucket: "salao15mingeral.appspot.com",
+    messagingSenderId: "645464575134",
+    appId: "1:645464575134:web:a5fe8ce802fe35fd"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+
+
+<div id="interface">
+	<div id="menu">
+		<h1>Salão da Barbara</h1>
+		<h2>A melhor opção para sua beleza</h2>
+	</div>
+	<div>
+		<nav id="menuprincipal" >
+		<!--    	nav de navegação-->
+			<h1>Menu Principal</h1>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="profissionais.html">Profissionais</a></li>
+                                  <li><a href="clientes.html">Clientes</a></li>
+				<li><a href="agendamentos.html">Agendamentos</a></li>
+				<li><a href="outros.html">Outros</a></li>
+			</ul>
+		</nav>
+	</div>
+
+	<div id="menusecundario">
+		<nav id="menuprofissionais" >
+		<!--    	nav de navegação-->
+			<h1>Menu Principal</h1>
+			<ul>
+				<li><a href="incluirprof.html">Incluir Profissional</a></li>
+				<li><a href="pesquisarprofissionais.html">Pesquisar Profissional</a></li>
+			</ul>
+		</nav>
+	</div>
+	<div id="incluir">
+		<table id="tblincluir">
+			<tr>
+				<td>Id: </td>
+				<td><input type="text" name="id" id="prof_id"/></td>
+			</tr>
+			<tr>
+				<td>Nome: </td>
+				<td><input type="text" name="user_name" id="prof_name"/></td>
+			</tr>
+			<tr>
+				<td>NIF: </td>
+				<td><input type="text" name="user_name" id="prof_nif"/></td>
+			</tr>
+			<tr>
+				<td>Endereço: </td>
+				<td><input type="text" name="user_name" size="50" id="prof_end"/></td>
+			</tr>
+			<tr>
+				<td>Telefone: </td>
+				<td><input type="tel" name="user_name" id="prof_tel"/></td>
+			</tr>
+			<tr>
+				<td>E-mail: </td>
+				<td><input type="email" name="user_name" id="prof_email"/></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="button" id="insert" value="Save" onClick="save_user();"/>
+					<input type="button" id="update" value="Update" onClick="update_user();"/>
+					<input type="button" id="apagar" value="Delete" onClick="delete_user();"/>
+				</td>
+			</tr>
+		</table>
+		<div id="UL">
+			<h3 >Lista de Profissionais</h3>
+		</div>
+		
+		<table class="lista" id="tbl_users_list" border=".1">
+			<thead>
+				<tr>
+					<td>#ID</td>
+					<td>NAME:</td>
+					<td>NIF:</td>
+					<td>ENDEREÇO:</td>
+					<td>TELEFONE:</td>
+					<td>E-MAIL:</td>
+				</tr>
+			</thead>
+			<tbody id="table_body">
+				
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script>
+	
+	populateTable();
+	
+	//var user_name = document.getElementById('user_name').value;
+	var user_id = document.getElementById('prof_id').value;
+	
+	function save_user(){
+		
+		var prof_name = document.getElementById('prof_name').value;
+		var prof_nif = document.getElementById('prof_nif').value;
+		var prof_end = document.getElementById('prof_end').value;
+		var prof_tel = document.getElementById('prof_tel').value;
+		var prof_email = document.getElementById('prof_email').value;
+		
+		var database = firebase.database();
+		
+		var fruitRef = database.ref('profissional');
+		var profId = fruitRef.push().key;
+		var adicionarRef = firebase.database().ref('profissional/'+profId);
+		adicionarRef.update({
+			id_prof: profId,
+			nome_prof: prof_name,
+			prof_nif: prof_nif,
+			prof_end: prof_end,
+			prof_tel: prof_tel,
+			prof_email: prof_email
+		});
+		
+		alert('Profissional criado com sucesso');
+		reset_campos();
+		reload_page();
+		
+	}
+	
+	
+	function update_user(){
+		
+		var prof_id = document.getElementById('prof_id').value;
+		var prof_name = document.getElementById('prof_name').value
+		var prof_nif = document.getElementById('prof_nif').value;
+		var prof_end = document.getElementById('prof_end').value;
+		var prof_tel = document.getElementById('prof_tel').value;
+		var prof_email = document.getElementById('prof_email').value;
+		//window.alert("id e usuario em updade: "+user_id +" "+ user_name);
+		var updateRef = firebase.database().ref('profissional/'+prof_id);
+		updateRef.update({id_prof: prof_id,
+						nome_prof: prof_name,
+						prof_nif: prof_nif,
+						prof_end: prof_end,
+						prof_tel: prof_tel,
+						prof_email: prof_email
+						});
+		
+		alert('The user is updated successfully');
+		reset_campos();
+		reload_page();
+	}
+	
+	function delete_user(){
+		var prof_id = document.getElementById('prof_id').value;
+		var deleteRef = firebase.database().ref('profissional/'+prof_id);
+		deleteRef.remove();
+		alert('The user is deleted successfully');
+		reset_campos();
+		reload_page();
+	}
+	
+	function reload_page(){
+		window.location.reload();
+	}
+	
+	function reset_campos(){
+		
+		document.getElementById('prof_id').value = "";
+		document.getElementById('prof_name').value = "";
+		document.getElementById('prof_nif').value = "";
+		document.getElementById('prof_end').value = "";
+		document.getElementById('prof_tel').value = "";
+		document.getElementById('prof_email').value = "";
+	
+	}
+	
+	//populateTable();
+	function populateTable(){
+		alert('oi 1');
+		var table = document.getElementById("tbl_users_list");
+		var populateRef = firebase.database().ref('profissional/');
+		var rowIndex = 1;
+		alert('oi 2');
+			populateRef.once('value', function(snapshot){
+                            alert('oi 3');
+				snapshot.forEach(function (childSnapshot){
+                                    alert('oi 4');
+					var childKey = childSnapshot.key;
+					var childData = childSnapshot.val();
+					
+					var row = table.insertRow(rowIndex);
+					var cellId = row.insertCell(0);
+					var cellName = row.insertCell(1);
+					var cellEmail = row.insertCell(2);
+					var cellEnd = row.insertCell(3);
+					var cellNif = row.insertCell(4);
+					var cellTel = row.insertCell(5);
+					cellId.appendChild(document.createTextNode(childKey));
+					cellName.appendChild(document.createTextNode(childData.nome_prof));
+					cellEmail.appendChild(document.createTextNode(childData.prof_email));
+					cellEnd.appendChild(document.createTextNode(childData.prof_end));
+					cellNif.appendChild(document.createTextNode(childData.prof_nif));
+					cellTel.appendChild(document.createTextNode(childData.prof_tel));
+					
+					rowIndex = rowIndex + 1;
+				});
+			});alert('oi 5');
+	}
+	
+	function reload_page(){
+		window.location.reload();
+	}
+	
+</script>
+
+</body>
+</html>

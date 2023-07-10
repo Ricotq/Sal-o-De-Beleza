@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Datas</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <p id="test"></p>
+            <p id="test2"></p>
+        </div>
+        <script>
+            var diaDaSemana="";
+            var date = new Date();
+            var data = date.getDay();
+            switch(data){
+                case 1: 
+                    diaDaSemana="Segunda-feira";
+                    break;
+                case 2: 
+                    diaDaSemana="Terça-feira";
+                    break;
+                case 3: 
+                    diaDaSemana="Quarta-feira";
+                    break;
+                case 4: 
+                    diaDaSemana="Quinta-feira";
+                    break;
+                case 5: 
+                    diaDaSemana="Sexta-feira";
+                    break;
+                case 6: 
+                    diaDaSemana="Sábado";
+                    break;
+                case 7: 
+                    diaDaSemana="Domingo";
+                    break;
+            }
+            //console.log(date.getDay());
+            var d = date.getDate();
+            var m = date.getMonth()+1;
+            var y = date.getFullYear();
+            if(d<10){
+                d = '0'+d;
+            }
+            if(m<10){
+                m='0'+m;
+            }
+            date2 = d+'/'+m+'/'+y;
+            //document.write(date);
+            //document.getElementById("test").innerHTML = date.getDate()+"/"+ date.getMonth()+"/"+ date.getFullYear();
+            document.getElementById("test").innerHTML = date2;
+            document.getElementById("test2").innerHTML = diaDaSemana;
+            
+            
+        </script>
+    </body>
+</html>

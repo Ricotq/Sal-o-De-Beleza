@@ -1,0 +1,237 @@
+@charset "UTF-8";
+/* CSS Document */
+
+@import url('https://fonts.googleapis.com/css?family=ABeeZee');
+
+body{
+	background-color: #dddddd;;
+	color: black;
+}
+div#menuprincipal{
+	border-bottom: 1px #606060 solid;
+}
+div#interface{
+	width: 1200px;
+	height: auto;
+	background-color: #ffffff;
+	margin: 0px auto 0px auto;
+	box-shadow: 0px 0px 10px rgba(0,0,0,.5);
+	padding: 40px 10px 10px 10px;
+}
+div#interface2{
+	width: 1200px;
+	height: auto;
+	background-color: #ffffff;
+	margin: 0px auto 0px auto;
+	box-shadow: 0px 0px 10px rgba(0,0,0,.5);
+	padding: 40px 10px 10px 10px;
+}
+
+div#menu{
+	border-bottom: 1px #606060 solid;
+}
+div#menusecundario{
+	border-bottom: 1px #606060 solid;
+}
+div#UL{
+	margin_top: 100px;
+	text-align: center;
+}
+div#caixa{
+    margin: 0px auto 0px auto;
+    border: 1px #606060 solid;
+    height: 500px;
+}
+div#incluir{
+    margin: -25px 2% 0px 5%;
+    float: left;
+    /*margin-top: 30px;
+    width: 400px;
+    background-color: #B22222*/
+	/*text-align: center;*/
+	/*margin-top: 50px;
+	margin-left: 50%;
+	margin-right: 50%;*/
+	/*margin: 160px auto 0px auto;*/
+}
+div#div_checkbox{
+    margin: 0px 5% 0px 5%;
+    float: left;
+    /*margin-top: 12px;
+    width: 600px;
+    background-color: #00FF7F*/
+}
+div#interface3{
+    margin: 0px 2% 0px 2%;
+    float: left;
+    
+}
+div#corpo{
+    margin-top: 50px;
+}
+div.interface{
+         width: 1180px;
+	height: 70px;
+	background-color: #ffffff;
+	margin: 0px auto 0px auto;
+	box-shadow: 0px 0px 10px rgba(0,0,0,.5);
+	padding: 0px 10px 0px 10px;
+}
+div#tabelas{
+         width: 1200px;
+	height: 300px;
+	background-color: #ffffff;
+	margin: 0px auto 0px auto;
+	box-shadow: 0px 0px 10px rgba(0,0,0,.5);
+        padding: 0px 10px 0px 10px;
+}
+div#principal{
+    margin-top: 33px;
+    float: left;
+    
+}
+div#secundaria{
+    margin-top: 33px;
+    float: left;
+    
+}
+div.agenda{
+         width: 1200px;
+	height: 720px;
+	background-color: #ffffff;
+	margin: 0px auto 0px auto;
+	box-shadow: 0px 0px 10px rgba(0,0,0,.5);
+	padding: 10px 10px 0px 10px;
+}
+h1{
+	font-family: 'ABeeZee', sans-serif;
+	font-size: 25pt;
+	color: #606060;
+	margin-top: 0px;
+	margin-left: 100px;
+}
+h2{
+	font-family: 'ABeeZee', sans-serif;
+	font-size: 15pt;
+	color: #888888;
+	margin-top: -20px;
+	margin-left: 100px;
+}
+h3{
+	font-family: 'ABeeZee', sans-serif;
+	font-size: 15pt;
+	color: #515151;
+	
+	margin-left: auto;
+	margin-right: auto;
+}
+
+nav ul {
+	list-style: none;
+	text-transform: uppercase;
+/*	position: absolute;*/
+	left: auto;
+	right: auto;
+	top: -10px;
+	
+}
+/*Menu de Navegação*/
+nav#menuprincipal li {
+	display: inline-block;
+	background-color: #dddddddd;
+	padding: 10px;
+	margin: 2px;
+	transition: background-color 1s;
+}
+nav#menuprincipal li:hover{
+	background-color: #606060;
+}
+
+nav#menuprincipal h1{
+	display: none;
+}
+
+nav#menuprincipal a {
+	color: #000000;
+	text-decoration: none;
+}
+
+nav#menuprincipal a:hover{
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+
+/*Menu Profissionais*/
+nav#menuprofissionais ul {
+	list-style: none;
+	text-transform: uppercase;
+/*	position: absolute;*/
+	top: -20px;
+	left: 500px;
+	right: auto;
+}
+/*Menu de Navegação*/
+nav#menuprofissionais li {
+	display: inline-block;
+	background-color: #dddddddd;
+	padding: 10px;
+	margin: 2px;
+	transition: background-color 1s;
+}
+nav#menuprofissionais li:hover{
+	background-color: #606060;
+}
+
+nav#menuprofissionais h1{
+	display: none;
+}
+
+nav#menuprofissionais a {
+	color: #000000;
+	text-decoration: none;
+}
+
+nav#menuprofissionais a:hover{
+	color: #ffffff;
+	text-decoration: underline;
+}
+table#tblincluir{
+	margin: 50px auto 15px auto;
+	
+}
+
+h2#h2_caixa{
+    text-align: left;
+    margin-top: 30px;
+}
+input#insert{
+    margin: 50px 50% 100px 40%;
+}
+
+table.tb{
+    background-color: #ffffff;
+    width: 480px;
+    padding-left: 60px;
+    padding-right: 60px;
+    margin: 0px auto 0px auto;
+    box-shadow: 0px 0px 10px rgba(0,0,0,.5);
+}
+table#tb1{
+    padding-left: 100px;
+    margin-top: -20px;
+}
+table#tb1 td{
+    width: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+table#tbl_users_list{
+	margin: -15px auto 0px auto;
+	background-color: #EEEEE0;
+}
+table#tbl_espec_list{
+	margin: -15px auto 0px auto;
+	background-color: #EEEEE0;
+}

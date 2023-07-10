@@ -1,0 +1,300 @@
+﻿<!doctype html>
+<html>
+<head>
+
+<link rel="stylesheet" href="index2.css"/>
+<meta charset="UTF-8">
+<title>Incluir Agendamento</title>
+<script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+
+</head>
+
+<body id="corpo">
+
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCRHDyxKv5kY3aq5LzLNlwrjqAxbtCEzuw",
+    authDomain: "salao15mingeral.firebaseapp.com",
+    databaseURL: "https://salao15mingeral.firebaseio.com",
+    projectId: "salao15mingeral",
+    storageBucket: "salao15mingeral.appspot.com",
+    messagingSenderId: "645464575134",
+    appId: "1:645464575134:web:a5fe8ce802fe35fd"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+<header>
+    <div class="bloco">
+        <div class="bloco1">
+            <img id="logo" src="img/logo.png"/>
+        </div>
+        
+        <div class="bloco1" style="padding-top: 30px;padding-right: -30px; width: 350px;">
+        </div>
+
+    </div>
+</header>
+<div class="blocoMenu">
+    <div class="btn">
+        <a href="index.html"><button type="button">Home</button></a>
+    </div>
+</div>
+
+<div style="text-align: center; font-size: 22px; width: 520px; height: auto; font-family: 'Righteous', cursive;
+    margin: 1px auto 15px auto; text-decoration: underline;">
+		<div id="UL" >
+			<h3 >Incluir Especialidade:</h3>
+		</div>
+</div>
+	
+<div style="font-size: 22px; width: 690px; height: auto; font-family: 'Righteous', cursive;
+    margin: 1px auto 15px auto;">
+		<table  id="tblincluir">
+			<tr>
+				<td>Nome da especialidade: </td>
+				<td><input type="text" class="texto" name="espec_name" id="espec_name" maxlength="25"/></td>
+			</tr>
+                        <tr>
+				<td>Valor: </td>
+                                <td><input type="text" class="textoMonetario" value="€" id="euro"/><input type="number" min="0.00" max="1000.00" step="0.01" class="textoMonetarioFloat" name="espec_valor" id="espec_valor" onchange="acertarNumero();"/></td>
+			</tr>
+                        <tr>
+                          <td>Duração: </td>
+                            <td>
+                                <input type="radio" name="periodo" value="15 Minutos" id="15Minutos" checked/>&nbsp;<label for="15Minutos">15 Minutos</label>&nbsp; &nbsp;<br>
+                                <input type="radio" name="periodo" value="30 Minutos" id="30Minutos"/>&nbsp;<label for="30Minutos">30 Minutos</label><br>
+                                <input type="radio" name="periodo" value="45 Minutos" id="45Minutos"/>&nbsp;<label for="45Minutos">45 Minutos</label><br>
+                                <input type="radio" name="periodo" value="1 Hora" id="1Hora"/>&nbsp;<label for="1Hora">1 Hora</label><br>
+                                <input type="radio" name="periodo" value="1 Hora e 30" id="1HoraE30"/>&nbsp;<label for="1HoraE30">1 Hora e 30</label><br>
+                                <input type="radio" name="periodo" value="2 Horas" id="2Horas"/>&nbsp;<label for="2Horas">2 Horas</label>
+                            </td>
+                        </tr>
+			<tr>
+				<td colspan="2">
+                                           
+					<input type="button" class="divBotao" id="insert" value="Save" onClick="save_espec();"/>
+                                        <input type="color" class="divBotao" id="idCor" value="#00FFFF"/>
+				</td>
+			</tr>
+		</table>
+</div>
+<div style="font-size: 22px; width: 850px; height: auto; font-family: 'Righteous', cursive;
+    margin: -10px auto 15px auto;">
+		<div style="text-align: center; font-size: 18px; width: 850px; height: auto; font-family: 'Righteous', cursive;
+    margin: -10px auto 15px auto;">
+			<h3 >Lista de Especialidades:</h3>
+		</div>
+		
+    <table id="tbl_espec_list" style="width: 900px; margin-bottom: 100px;">
+			<thead>
+				<tr>
+                                    <!--<td style="border-bottom: 1px black solid;"><span style="margin-right:200px; font-size: 20px;">CÓDIGO</span></td>-->
+					<td style="border-bottom: 1px black solid;"><span style="margin-right:50px; font-size: 20px;">NOME DA ESPECIALIDADE:</span></td>
+					<td style="border-bottom: 1px black solid;"><span style="margin-right:50px; font-size: 20px;">Valor:</span></td>
+                                        <td style="border-bottom: 1px black solid;"><span style="margin-right:2px; font-size: 20px;">Período</span></td>
+				</tr>
+			</thead>
+			<tbody id="table_body">
+				
+			</tbody>
+		</table>
+</div>
+
+<script>
+document.getElementById('espec_name').focus();
+document.getElementById('euro').disabled = true;
+function mostrarCor(){
+    var cor = document.getElementById("idCor").value;
+    alert('cor = '+cor);
+}
+
+var especArray = [];
+
+//var hideUpdate = document.getElementById("update");
+//var hideDelete = document.getElementById("apagar");
+//hideUpdate.style.display = "none";
+//hideDelete.style.display = "none";
+	populateTable();
+	
+	var espec_name = document.getElementById('espec_name').value;
+        var periodos = "";
+	//var espec_id = document.getElementById('espec_id').value;
+	
+	function save_espec(){
+		
+		var espec_name = document.getElementById('espec_name').value;
+		
+                if(!espec_name){
+                    alert('O campo nome precisa ser preenchido...');
+                    reset_campos();
+                }else{
+                  checarSeJaExiste();
+                }
+		
+		
+	}
+	
+	function reload_page(){
+		window.location.reload();
+	}
+	
+	function reset_campos(){
+		//document.getElementById('espec_id').value = "";
+		document.getElementById('espec_name').value = "";
+                document.getElementById('espec_valor').value = "";
+                
+		document.getElementById('15Minutos').checked= true;
+	}
+	
+	function populateTable(){
+		
+		var table = document.getElementById("tbl_espec_list");
+		var populateRef = firebase.database().ref('especialidades/');
+		var rowIndex = 1;
+		
+			populateRef.once('value', function(snapshot){
+				snapshot.forEach(function (childSnapshot){
+					var childKey = childSnapshot.key;
+					var childData = childSnapshot.val();
+					
+					var row = table.insertRow(rowIndex);
+					//var cellId = row.insertCell(0);
+					var cellName = row.insertCell(0);
+                                          var cellValor = row.insertCell(1);
+					var cellDesc = row.insertCell(2);
+                                           var cellChange = row.insertCell(3);
+                                           var cellDelete = row.insertCell(4);
+					
+					/*cellId.appendChild(document.createTextNode(childKey));
+					cellName.appendChild(document.createTextNode(childData.espec_name));
+					cellDesc.appendChild(document.createTextNode(childData.espec_desc));*/
+                                           cellName.width="500px";
+                                           cellDesc.width="500px";
+                                           
+                                           //cellId.innerHTML="<td><span style='width=300px; background-color: "+childData.espec_cor+"; margin-right: 50px; font-size: 20px;'>"+childKey+"</span></td>";
+                                           cellName.innerHTML="<td><p class='textoMenor' style='background-color: "+childData.espec_cor+"; font-size: 20px;'>"+childData.espec_name+"</p></td>";
+                                           cellValor.innerHTML="<td><p class='textoMenorMonetario' style='background-color: "+childData.espec_cor+"; font-size: 20px;'>€ "+childData.espec_valor+"</p></td>";
+                                            cellDesc.innerHTML="<td><p class='textoMenor110' style='background-color: "+childData.espec_cor+"; font-size: 20px;'>"+childData.periodos+"</p></td>";
+                                           cellChange.innerHTML="<input type='button' class='divBotaoLista' id='btnDel"+rowIndex+"' style='margin-left: 30px' value = 'Alterar' onClick='alterar("+rowIndex+");'></button></td></tr>";
+                                           cellDelete.innerHTML="<input type='button' class='divBotaoLista' id='btnDel"+rowIndex+"' style='margin-left: 30px' value = 'Excluir' onClick='excluir("+rowIndex+");'></button></td></tr>";
+                                           especArray.push(childKey);
+					rowIndex = rowIndex + 1;
+				});
+			});
+	}
+	
+        function alterar(n){
+            var x=n-1;
+            for(var i=0; i<especArray.length; i++){
+                if(i===x){
+                    //alert('especArray = '+especArray[i]);
+                    sessionStorage.setItem('idEspecialidade', especArray[i]);
+                    window.location="especialidadesalterar.html";
+                }
+            }
+            
+        }
+        function excluir(n){
+            //alert('especArray = '+especArray);
+            var x=n-1;
+            for(var i=0; i<especArray.length; i++){
+                if(i===x){
+                    //alert('especArray('+i+') = '+especArray[i]+'   e n = '+x);
+                    var deleteRef = firebase.database().ref('especialidades/'+especArray[i]);
+                    deleteRef.remove();
+                    //alert('Especialidade remivida com sucesso');
+                    reset_campos();
+                    reload_page();
+                }
+            }
+        }
+  function checarSeJaExiste(){
+    var flagSalvar=1;
+    //alert('checarSeJaExiste()');
+    var espec_name = document.getElementById('espec_name').value;
+    //alert('espec_name = '+espec_name);
+    var populateRef = firebase.database().ref('especialidades/');
+    
+      populateRef.once('value', function(snapshot){
+          snapshot.forEach(function (childSnapshot){
+            //alert('aqui');
+          var childKey = childSnapshot.key;
+          var childData = childSnapshot.val();
+          //alert('childData.espec_name = '+childData.espec_name);
+          if(childData.espec_name===espec_name){
+            alert('Especialidade Já Existe...');
+            flagSalvar=0;
+            //reset_campos();
+            //reload_page();
+          }
+        });
+          if(flagSalvar===1){
+        //alert('flagSalvar = '+flagSalvar);
+            salvar();
+          }
+      });
+  }
+
+  function salvar(){
+    //alert('SALVAR');
+    var espec_name = document.getElementById('espec_name').value;
+    var espec_valor = document.getElementById('espec_valor').value;
+    var x=Number(espec_valor).toFixed(2);
+    if(x>0 && x<1001){
+        var valorPeriodo = document.getElementsByName('periodo');
+                for(var i=0; i<valorPeriodo.length; i++){
+                     if(valorPeriodo[i].checked){
+                         periodos=valorPeriodo[i].value;
+                         //alert("periodos = "+periodos);
+                         //alert("valorPeriodo["+i+"] = "+valorPeriodo[i].value);
+                     }
+                }
+                var cor = document.getElementById("idCor").value;
+                
+                    var database = firebase.database();
+    
+                    var fruitRef = database.ref('especialidades');
+                    var espec_id = fruitRef.push().key;
+                    var adicionarRef = firebase.database().ref('especialidades/'+espec_id);
+                    adicionarRef.update({
+                            espec_id: espec_id,
+                            espec_name: espec_name,
+                            espec_valor: x,
+                            periodos: periodos,
+                            espec_cor: cor
+                    });
+
+                    
+                    reset_campos();
+                    reload_page();
+                    //alert('Especialidade criada com sucesso');  
+    }else{
+        alert("Valor deve ser preenchido e nao pode ser maior do que €1.000,00.");
+    }
+    
+    
+    //espec_valor.toFixed(2);
+    
+      
+  }
+  
+  function acertarNumero(){
+      var espec_valor = document.getElementById('espec_valor').value;
+      var x=Number(espec_valor).toFixed(2);
+      document.getElementById('espec_valor').value=x;
+      if(x>1000){
+          alert("Valor não pode ser maiór do que €1.000,00");
+          document.getElementById('espec_valor').value="";
+      }
+  }
+	
+</script>
+
+</body>
+</html>
+
+

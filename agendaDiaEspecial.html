@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+
+<link rel="stylesheet" href="index2.css"/>
+<meta charset="UTF-8">
+<title>Agenda Profissional</title>
+<script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+</head>
+
+<body id="corpo">
+
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCRHDyxKv5kY3aq5LzLNlwrjqAxbtCEzuw",
+    authDomain: "salao15mingeral.firebaseapp.com",
+    databaseURL: "https://salao15mingeral.firebaseio.com",
+    projectId: "salao15mingeral",
+    storageBucket: "salao15mingeral.appspot.com",
+    messagingSenderId: "645464575134",
+    appId: "1:645464575134:web:a5fe8ce802fe35fd"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<header>
+    <div class="bloco">
+        <div class="bloco1">
+            <img id="logo" src="img/logo.png"/>
+        </div>
+        
+        <div class="bloco1" style="padding-top: 30px;padding-right: -30px; width: 350px;">
+        </div>
+
+    </div>
+</header>
+<div class="blocoMenu">
+        <div class="btn">
+            <a href="index.html"><button type="button">Home</button></a>
+        </div>
+        <div>
+            <a href="agendamentos.html"><button type="button">Agenda</button></a>
+        </div>
+        <div>
+            <a href="listardiasrspeciais.html"><button type="button">Listar dias Especiais</button></a>
+        </div>
+        <div class="btn">
+            <a href="listarclientes.html"><button type="button">Agendamento Buscar por Lista</button></a>
+        </div>
+        <div class="btn">
+            <a href="incluiragendamentolocaltel.html"><button type="button">Agendamento Buscar por Tel.</button></a>
+        </div>
+        <div class="btn">
+            <a href="buscarclientepornome.html"><button type="button">Agendamento Buscar por Nome</button></a>
+        </div>
+</div>
+
+<div class="bloco2">
+    <div id="principal" class="bloco2Dentro" style="text-align: center; width: 1000px; margin-top: -10px; color: #836FFF;">
+        
+    </div>
+    <div style="text-align: center; width: 350px; margin: 1px auto 1px auto;" id="_data">
+        <table id="tb1" style="border: 1px #00FF7F">
+                <tr>
+                    <td>
+                        <h2 id="innerDataShow" style=" width: 150px; margin-top: -4px;"></h2>
+                    </td>
+                    <td>
+                        <h2 id="innerDiaDaSemana" style="margin-left: 10px; margin-top: -4px;"></h2>
+                    </td>
+                </tr>
+            </table>
+
+    </div>    
+
+        
+</div>
+<div style="width: 750px; margin: 1px auto 1px auto;">    
+    <div class="bloco1SemFloat" style="margin-top: 50px;">  
+        <table id="tabelaAgendaProfissional">
+            
+            
+        </table>
+
+    </div>
+    <div>
+        <p style=" margin-top: 50px;"></br></br></br></p>
+    </div>
+</div>
+<script src="agendaDiaEspecial.js"></script>
+</body>
+</html>
+
+

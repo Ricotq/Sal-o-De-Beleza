@@ -1,0 +1,75 @@
+﻿<!doctype html>
+<html>
+<head>
+
+<link rel="stylesheet" href="index2.css"/>
+<meta charset="UTF-8">
+<title>Profissionais</title>
+<script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+<style>
+    
+</style>
+
+</head>
+
+<body id="corpo">
+
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCRHDyxKv5kY3aq5LzLNlwrjqAxbtCEzuw",
+    authDomain: "salao15mingeral.firebaseapp.com",
+    databaseURL: "https://salao15mingeral.firebaseio.com",
+    projectId: "salao15mingeral",
+    storageBucket: "salao15mingeral.appspot.com",
+    messagingSenderId: "645464575134",
+    appId: "1:645464575134:web:a5fe8ce802fe35fd"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<header>
+    <div class="bloco">
+        <div class="bloco1">
+            <img id="logo" src="img/logo.png"/>
+        </div>
+        
+        <div class="bloco1" style="padding-top: 30px;padding-right: -30px; width: 350px;">
+        </div>
+
+    </div>
+</header>
+
+    <div class="blocoMenu">
+        <div class="btn">
+            <a href="index.html"><button type="button">Home</button></a>
+        </div>
+        
+        <div>
+            <a href="listarclientescli.html"><button type="button">Listar Clientes</button></a>
+        </div>
+        <div class="btn">
+            <a href="buscarclientepornome.html"><button type="button">Buscar Cliente por Nome</button></a>
+        </div>
+        <div>
+            <a href="cadastrarclientelocal.html"><button type="button">Cadastrar Clientes</button></a>
+        </div>
+    </div>
+    <div class="blocoLista">
+        <h3>Pesquisar Cliente por Número de Telefone</h3>
+    </div>
+    <div class="incluirProfDentro">
+        <table id="tblincluir">			
+                     <tr>
+                         <td>Telefone: </td>
+                         <td><input type="tel" class="texto" name="user_name" id="telefone" style="height: 40px; width: 200px;"/></td>
+                         <td><button type="button" style="margin-top: 0px; height: 30px;" id="btnBuscar" onclick="buscar();">Buscar</button></td>
+                     </tr>
+        </table>
+    </div>
+<script src="pesquisarclientetel.js"></script>
+</body>
+</html>

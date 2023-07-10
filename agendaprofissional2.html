@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+
+<link rel="stylesheet" href="index.css"/>
+<meta charset="UTF-8">
+<title>Agenda Profissional</title>
+<script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+
+</head>
+
+<body id="corpo">
+
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCRHDyxKv5kY3aq5LzLNlwrjqAxbtCEzuw",
+    authDomain: "salao15mingeral.firebaseapp.com",
+    databaseURL: "https://salao15mingeral.firebaseio.com",
+    projectId: "salao15mingeral",
+    storageBucket: "salao15mingeral.appspot.com",
+    messagingSenderId: "645464575134",
+    appId: "1:645464575134:web:a5fe8ce802fe35fd"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<div id="interface">
+    <div id="menu">
+	<h1>Salão da Barbara</h1>
+	<h2>A melhor opção para sua beleza</h2>
+    </div>
+    <div>
+	<nav id="menuprincipal" >
+         <!--    	nav de navegação-->
+         <h1>Menu Principal</h1>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="profissionais.html">Profissionais</a></li>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="agendamentos.html">Agendamentos</a></li>
+                <li><a href="outros.html">Outros</a></li>
+            </ul>
+	</nav>
+    </div>
+
+    <div>
+	<nav id="menuprofissionais" >
+            <!--    	nav de navegação-->
+            <h1>Menu Principal</h1>
+            <ul>
+                <li><a href="pesquisaragendamento.html">pesquisar Agendamento</a></li>
+                <li><a href="incluiragendamento.html">Incluir Agendamento</a></li>
+                <li><a href="especialidades.html">Especialidades</a></li>
+            </ul>
+	</nav>
+    </div>
+    <div class="interface">
+        <div id="principal">
+
+        </div>
+        <div id="secundaria">
+            <table id="tb1">
+                
+            </table>
+
+        </div> 
+    </div>    
+
+        
+</div>
+<div class="agenda">    
+    <div>  
+        <table id="tabelaAgendaProfissional" class="tb" >
+            
+            
+        </table>
+
+    </div>
+</div>
+<script src="agendaprofissional2.js"></script>
+</body>
+</html>
+
+

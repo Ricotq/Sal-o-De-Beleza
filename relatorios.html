@@ -1,0 +1,153 @@
+﻿<!doctype html>
+<html>
+<head>
+
+<link rel="stylesheet" href="index2.css"/>
+<meta charset="UTF-8">
+<title>Profissionais</title>
+<script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+<style>
+    
+</style>
+
+</head>
+
+<body id="corpo">
+
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCRHDyxKv5kY3aq5LzLNlwrjqAxbtCEzuw",
+    authDomain: "salao15mingeral.firebaseapp.com",
+    databaseURL: "https://salao15mingeral.firebaseio.com",
+    projectId: "salao15mingeral",
+    storageBucket: "salao15mingeral.appspot.com",
+    messagingSenderId: "645464575134",
+    appId: "1:645464575134:web:a5fe8ce802fe35fd"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<header>
+    <div class="bloco">
+        <div class="bloco1">
+            <img id="logo" src="img/logo.png"/>
+        </div>
+        
+        <div class="bloco1A" style="padding-top: 0px;padding-right: -30px;">
+            <h3 id="titulo" style="margin-left: 0px; margin-top: 35px; font-size: 26px;"></h3>
+            <img src="" alt="imagem" style="margin-left: 31%; margin-right: 50%; margin-top: 30px; box-shadow: 0px 0px 20px rgba(0,0,0,.7); border-radius: 100px;" height="200" id="image">
+        </div>
+
+    </div>
+</header>
+
+    <div class="blocoMenu">
+        <div class="btn">
+            <a href="index.html"><button type="button">Home</button></a>
+        </div>
+        <div>
+            <a href="clientes.html"><button type="button">Clientes</button></a>
+        </div>
+        <div>
+            <a href="listarclientescli.html"><button type="button">Listar Clientes</button></a>
+        </div>
+        <div class="btn">
+            <a href="pesquisarclientetel.html"><button type="button">Buscar Cliente por Telefone</button></a>
+        </div>
+        <div class="btn">
+            <a href="buscarclientepornome.html"><button type="button">Buscar Cliente por Nome</button></a>
+        </div>
+        
+    </div>
+
+    <div class="blocoMenu">
+        <div>
+            <a href="relatoriosnaopagos.html"><button type="button">Serviços Não Pagos</button></a>
+        </div>
+        <div>
+            <a href="relatoriospagosnaoexec.html"><button type="button">Serviços Pagos Não Executados</button></a>
+        </div>
+        
+    </div>
+
+    <div class="bloco1SemFloat940B" style="height: 30px; text-align: center; font-size: 20px; margin-top: 10px;">  
+        <table>
+            <tr>
+                <td>
+                    <input type="radio" id="porPeriodo" style="margin-left: 35px; margin-right: 10px; height: 20px;" onclick="ativarPorPeriodo();"/><label for="porPeriodo">Selecionar Por Período</label>
+                </td>
+                <td>
+                    <span id="spanDataInicio" style="margin-left:50px; margin-right: 5px;">Data Inicial:</span>
+                </td>
+                <td>
+                    <input type="date" id="dataInicio" onchange="limparTabela(); " style="border-style: solid; border-radius: 10px; outline: none; height: 30px;"/>
+                </td>
+                <td>
+                    <span id="spanDataFim" style="margin-left:50px; margin-right: 5px;">Data Final:</span>
+                </td>
+                <td>
+                    <input type="date" id="dataFim" onchange="limparTabela(); " style="border-style: solid; border-radius: 10px; outline: none; height: 30px;"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="bloco1SemFloat940B" style="height: 30px; text-align: center; font-size: 22px; text-decoration: underline; margin-top: 20px;">  
+        <span style="margin-left: -100px; margin-top: 20px; color: #606060;">Relatórios:</span>
+        <span style="margin-left: 0px; margin-top: 20px; color: #606060;">Todos  Serviços.</span>
+    </div>
+
+    <div class="bloco1SemFloat940B">  
+        <table id="tabelaAgendaProfissionalHead">
+            <tr>
+                <td>
+                    <p style="font-size: 26px; width: 95px; margin-bottom: -20px; margin-top:20px; margin-left: 35px; text-decoration: underline;">Data</p>
+                </td>
+                <td>
+                    <p style="font-size: 26px; width: 160px; margin-bottom: -20px; margin-top:20px; margin-left: 10px; text-decoration: underline;">Horário</p>
+                </td>
+                <td>
+                    <p style="font-size: 26px; width: 310px; margin-bottom: -20px; margin-top:20px; text-decoration: underline;">Profissional</p>
+                </td>
+                <td>
+                    <p style="font-size: 26px; width: 200px; margin-bottom: -20px; margin-top:20px; text-decoration: underline;">Serviço</p>
+                </td>
+                <td>
+                    <p style="font-size: 26px; width: 210px; margin-bottom: -20px; margin-top:20px; text-decoration: underline;">Valor</p>
+                </td>
+                <td>
+                    <p style="font-size: 26px; width: 91px; margin-bottom: -20px; margin-top:20px; text-decoration: underline;">Desc.</p>
+                </td>
+                <td>
+                    <p style="font-size: 26px; width: 90px; margin-bottom: -20px; margin-top:20px; text-decoration: underline;">$ Final</p>
+                </td>
+                <td>
+                    <p style="font-size: 26px; width: 130px; margin-bottom: -20px; margin-top:20px; text-decoration: underline;">Data Pag.</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="bloco1SemFloat940B" style="height: 50px;">  
+        
+    </div>
+
+    <div class="bloco1SemFloat940B">  
+        <table id="tabelaAgendaProfissional">
+            
+            
+        </table>
+
+    </div>
+    <div class="bloco1SemFloat940B" style="height: 100px;">  
+        
+    </div>
+    
+    
+<script src="relatorios.js"></script>
+</body>
+</html>

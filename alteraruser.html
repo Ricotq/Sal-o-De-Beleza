@@ -1,0 +1,484 @@
+<!doctype html>
+<html>
+<head>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="index2.css"/>
+<meta charset="UTF-8">
+<title>Profissionais</title>
+<script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+
+</head>
+
+<body id="corpo">
+
+
+
+<header>
+    <div class="bloco">
+        <div class="bloco1">
+            <img id="logo" src="img/logo.png"/>
+        </div>
+        
+        <div class="bloco1" style="padding-top: 30px;padding-right: -30px; width: 350px;">
+        </div>
+
+    </div>
+</header>
+
+<div class="blocoMenu">
+        <div class="btn">
+            <a href="index.html"><button type="button">Home</button></a>
+        </div>
+        <div>
+                <a href="listarclientescli.html"><button type="button">Listar Clientes</button></a>
+        </div>
+        <div class="btn">
+            <a href="pesquisarclientetel.html"><button type="button">Buscar Cliente por Telefone</button></a>
+        </div>
+        <div class="btn">
+            <a href="buscarclientepornome.html"><button type="button">Buscar Cliente por Nome</button></a>
+        </div>
+        <div>
+            <a href="cadastrarclientelocal.html"><button type="button">Cadastrar Clientes</button></a>
+        </div>
+    </div>
+<div class="blocoLista">
+        <p><span id="spanIfoProf">Entre com as informações de ALTERAÇÃO do Cliente</span></p>
+</div>
+
+<div class="incluirProf">
+    <div class="incluirProfDentro">
+            <div id="incluir">
+                <table id="tblincluir">			
+                     <tr>
+                        <td>Nome: </td>
+                        <td><p class="texto" id="cli_name" style="width: 400px; padding-top: 5px; font-size: 25px; color: black"></p></td>
+                     </tr>
+                     <tr>
+                        <td>Telefone: </td>
+                        <td><input type="tel" class="texto" id="cli_tel" maxlength="25"/></td>
+                     </tr>
+                     <tr>
+                         <td>E-mail: </td>
+                         <td><input type="email" class="texto" size="50" id="cli_email" maxlength="30"/></td>
+                     </tr>
+                     <tr>
+                        <td>Nif: </td>
+                        <td><input type="text" class="texto" name="Nif" size="12" id="cli_nif" maxlength="9"/></td>
+                    </tr>
+                     <tr>
+                    <td>Sexo: </td>
+                    <td>
+                        &nbsp &nbsp<input type="radio" name="tsexo" value="M" onclick="valorRadio();" id="cli_masculino"/>&nbsp<label for="cli_masculino">Masculino</label>&nbsp &nbsp
+                        <input type="radio" name="tsexo" value="F" onclick="valorRadio();" id="cli_feminino"/>&nbsp<label for="cli_feminino">Feminino</label>
+                    </td>
+                    </tr>
+              </table>
+         </div>
+    </div>
+    
+    <div class="incluirProfDentro1">
+          <div id="interface3">
+                <h3 style="text-align: center">Adicione uma imagem do cliente</h3>
+
+
+                <!--<img src="" style="display: none" height="200" id="image">
+                <input type="file" onchange="showImage.call(this)" id="file"/>-->
+
+                <img src="" style="display: none; margin-left: auto; margin-right: auto;" height="200" id="image">
+                <input type="file" id="file" onchange="showImage.call(this)" hidden ="hidden" />
+                <div class="blocoImagem">
+                    <span id="custom_text" style="margin-left: 10px; margin-top: 0px;">Nenhuma imagem escolhida ainda.</span>
+                </div>
+                <button type="button" id="custom_button" style="margin-top: 10px; margin-left: 110px;">Escolha uma Imagem</button>
+                
+           
+          </div>
+        
+    </div>
+    
+    <div id="progressBar" style="margin-top: -40px;">
+        <p id="textoProgresso" style="text-align: center; height: 5px;"></p>
+             <div style="text-align: center; margin-top: -21px;"  id="progresso">
+                 
+             </div>
+    </div>
+    
+    <div class="incluirProfDentro2">
+        <button type="button" style="margin-top: 20px" id="btnSalvar" onclick="pre_save_cliente();">Salvar</button>
+    </div>
+</div>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCRHDyxKv5kY3aq5LzLNlwrjqAxbtCEzuw",
+    authDomain: "salao15mingeral.firebaseapp.com",
+    databaseURL: "https://salao15mingeral.firebaseio.com",
+    projectId: "salao15mingeral",
+    storageBucket: "salao15mingeral.appspot.com",
+    messagingSenderId: "645464575134",
+    appId: "1:645464575134:web:a5fe8ce802fe35fd"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<script>
+    //ESTE SCRIPT TEM COMO FINALIDADE BUSCAR DADOS DO PROFISSIONAL E MOSTRAR NA TELA
+    var id_Cliente = sessionStorage.getItem('idcliente');
+    
+    var el = document.getElementById("progresso");
+    var txtprogress = document.getElementById("textoProgresso");
+    var width = 1;
+    document.getElementById('progressBar').style.display = "none";
+    
+    
+    //sessionStorage.setItem('idcliente',clienteId[n]);
+    //sessionStorage.setItem('nome_usuario',clienteNome[n]);
+    
+    //alert("id_Profissional em alterarprof = "+id_Profissional);
+
+
+    var sexocliente = "";
+    buscarDadosDoCliente();
+    function buscarDadosDoCliente(){
+        //alert('buscarDadosDoProfissional');
+        var nomecliente = document.getElementById('cli_name');
+        
+        var telcliente = document.getElementById('cli_tel');
+        var emailcliente = document.getElementById('cli_email');
+        var nifcliente = document.getElementById('cli_nif');
+        //nomeprofissional.innerHTML="jjjj";
+        var profissionalRef = firebase.database().ref('users/');
+        profissionalRef.once('value', function(snapshot){
+            snapshot.forEach(function (childSnapshot){
+
+                var childKey = childSnapshot.key;
+                var childData = childSnapshot.val();
+
+                if(id_Cliente===childData.user_id){
+                    nomecliente.innerHTML=childData.user_name;
+                    sessionStorage.setItem('nome_usuario',childData.user_name);
+                    sessionStorage.setItem('idcliente',childData.user_id);
+                    sexocliente=childData.user_sexo;
+                    telcliente.value=childData.user_tel;
+                    emailcliente.value=childData.user_email;
+                    nifcliente.value=childData.user_nif;
+                    sessionStorage.setItem('sexoCliente', childData.user_sexo);
+                }
+            });
+            //alert('sexocliente = '+sexocliente);
+            if(sexocliente==="M"){
+                //alert('sexocliente masculino = '+sexocliente);
+                var masculino = document.getElementById("cli_masculino");
+                masculino.checked=true;
+            }else{
+                //alert('sexocliente feminino = '+sexocliente);
+                var feminino = document.getElementById("cli_feminino");
+                feminino.checked=true;
+            }
+            //alert('AQUI');
+            document.getElementById("cli_tel").focus();
+        });
+        
+    }
+
+    var getcounter = 0;
+   
+//INICIO DA AREA QUE CUIDA DOS DADOS DEPOIS DE MOSTRADOS INICIALMENTE NA TELA
+    //var nomeCliente = sessionStorage.getItem('nome_usuario');
+    var idcliente = sessionStorage.getItem('idcliente');
+    
+    
+    function valorRadio(){
+            var sexo = document.getElementsByName("tsexo");
+            if(sexo[0].checked){
+                sexo="M";
+                sessionStorage.setItem('sexoCliente', "M");
+            }else if (sexo[1].checked){
+                sexo="F";
+                sessionStorage.setItem('sexoCliente', "F");
+            }
+            console.log("sexocliente = "+sexocliente);
+        }
+
+var clienteUrl="";
+    buscarImagem();
+    function buscarImagem(){
+        //alert('buscarImagem');
+        var imagemRef = firebase.database().ref('users/');
+        imagemRef.once('value', function(snapshot){
+            snapshot.forEach(function (childSnapshot){
+
+                var childKey = childSnapshot.key;
+                var childData = childSnapshot.val();
+                //alert('childData.url = '+childData.url);
+                
+                if(idcliente===childData.user_id){
+                    clienteUrl=childData.url;
+                    //alert('childData.url = '+childData.url);
+                }
+            });
+            inserirImagemAntiga(clienteUrl);
+            //alert('profissionalUrl = '+profissionalUrl);
+        });
+    }
+
+    function inserirImagemAntiga(clienteUrl){
+        //alert('profissionalUrl = '+profissionalUrl);
+        var image = document.getElementById("image");
+        image.src = clienteUrl;
+        image.style.display = "block";
+    }
+
+
+//Area referente ao botao de upload de imagem
+const realFileBtn = document.getElementById('file');
+const customBtn = document.getElementById('custom_button');
+const customTxt = document.getElementById('custom_text');
+
+customBtn.addEventListener("click", function(){
+    realFileBtn.click();
+});
+realFileBtn.addEventListener("change", function(){
+    if(realFileBtn.value){
+        customTxt.innerHTML=realFileBtn.value.match();
+    }else{
+        customTxt.innerHTML="Arquivo ainda não encontrado.";
+    }
+});
+
+
+function pre_save_cliente(){
+    
+    //var nomecliente = document.getElementById('cli_name').value;
+    //var sexocliente = document.getElementsByName('tsexo').valueOf();
+    var telcliente = document.getElementById('cli_tel').value;
+    //var emailcliente = document.getElementById('cli_email').value;
+    
+    if(!telcliente){
+        alert('O campo Telefone é obrigatório...');
+        //alert('counter = '+counter);
+    }else{
+        save_cliente();
+    }
+}
+	
+	function save_cliente(){
+            //alert('SAVE USER');
+                var nomecliente = document.getElementById('cli_name').value;
+                var sexo_cliente = sessionStorage.getItem('sexoCliente');
+                var telcliente = document.getElementById('cli_tel').value;
+                var emailcliente = document.getElementById('cli_email').value;
+                var cli_nif = document.getElementById('cli_nif').value;
+		
+                var populateRef = firebase.database().ref("users/");
+                populateRef.once('value', function(snapshot){
+                    snapshot.forEach(function (childSnapshot){
+                    var childKey = childSnapshot.key;
+                    var childData = childSnapshot.val();
+                
+                    //alert('childData.nome_prof = '+childData.nome_prof);
+                
+                    if(idcliente===childData.user_id){
+                        //alert('idcliente = '+idcliente+'     e   childData.user_id = '+childData.user_id);
+                        
+                    var adicionarRef = firebase.database().ref('users/'+idcliente);
+                    adicionarRef.update({
+			user_sexo: sexo_cliente,
+			user_tel: telcliente,
+                         user_nif: cli_nif,
+			user_email: emailcliente
+		});
+                }
+                
+            });;
+            
+           // alert('getespecialidades[i][3] = '+getespecialidades[i][3]);
+        });
+        uploadFile(idcliente,nomecliente);
+        reset_campos();
+        }
+        
+        
+        
+    
+	function reset_campos(){
+		document.getElementById('cli_name').innerHTML = "";
+		document.getElementById('cli_tel').value = "";
+		document.getElementById('cli_email').value = "";
+                document.getElementById('cli_nif').value = "";
+		
+                 
+                 document.getElementById('image').src = "";
+                
+                 
+                 var masculino = document.getElementById("cli_masculino");
+                 masculino.checked=false;
+                
+                 var feminino = document.getElementById("cli_feminino");
+                 feminino.checked=false;
+                 
+                 document.getElementById('progressBar').style.display = "none";
+                 document.getElementById('image').src = "img/semimagem.png";
+	
+	}
+	
+	function reload_page(){
+		//window.location.replace('http://localhost:8383/Salao/incluirprof.html');
+                window.location="profissionais.html";
+	}
+        
+var flag=0;
+function showImage(){
+    if(this.files && this.files[0]){
+        
+        //apagarPostAntigo();
+        //apagarImagemAntiga();
+        var obj = new FileReader();
+        obj.onload = function(data){
+            var image = document.getElementById("image");
+            image.src = data.target.result;
+            image.style.display = "block";
+            flag=1;
+            //alert('IMAGEM MUDOU');
+        };
+        obj.readAsDataURL(this.files[0]);
+    }else{
+        flag=0;
+    }
+}
+        
+        
+var selectedFile;
+$("#file").on("change", function(event){
+    $("#upload_btn").show(); 
+    selectedFile = event.target.files[0];
+});
+        
+        
+        
+var nomeCliente = sessionStorage.getItem('nome_usuario');
+//alert('nomeProfissional = '+nomeProfissional);
+
+function uploadFile(profId, prof_name){
+    if(flag===1){
+        //alert("profissionalUrl EM UPLOADFILE = "+profissionalUrl+"");
+            
+    //alert('profId = ' + profId + 'prof_name = '+ prof_name);
+    var fileName = selectedFile.name;
+    var storageRef = firebase.storage().ref('/images/' + fileName);
+    var uploadTask = storageRef.put(selectedFile);
+            
+    uploadTask.on('state_changed', function(snapshot){
+       // Observe state change events such as progress, pause, and resume
+       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+       document.getElementById('progressBar').style.display = "block";
+       var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+       console.log('Upload is ' + progress + '% done');
+       txtprogress.innerHTML=""+progress.toFixed(0)+"% concluído";
+       //el.style.width = progress + '% done';
+       el.style.width = ""+progress+"%";
+       switch (snapshot.state) {
+           case firebase.storage.TaskState.PAUSED: // or 'paused'
+               console.log('Upload is paused');
+               break;
+           case firebase.storage.TaskState.RUNNING: // or 'running'
+               console.log('Upload is running');
+               break;
+           }
+           }, function(error) {
+           // Handle unsuccessful uploads
+           }, function() {
+           // Handle successful uploads on complete
+           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+           uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+               console.log('File available at', downloadURL);
+               sessionStorage.setItem('downloadURL',downloadURL);
+               
+               if(el.style.width==="100%"){
+                       //alert('dentro do if');
+                       document.getElementById('progressBar').style.display = "none";
+                       //document.getElementById('image').src = "img/semimagem.png";
+                   }else{
+                       alert('Upload de imagem falhou...');
+                   }
+               el.style.width = "0%";
+               alert('Upload de Imagem Bem Sucedido.');
+               
+                    buscarDadosDoPost();
+                   
+                });
+            });buscarDadosDaImagemAntiga();
+    }else{
+        //alert('IMEGEM NAO MUDOU');
+    }
+}
+
+function buscarDadosDoPost(){
+    var pesquisarRef = firebase.database().ref('users/');
+                    pesquisarRef.once('value', function(snapshot){
+                    snapshot.forEach(function (childSnapshot){
+			var childKey = childSnapshot.key;
+			var childData = childSnapshot.val();
+                          
+                          var downloadURL = sessionStorage.getItem('downloadURL');
+                          if(childData.user_id===idcliente){
+                                //alert(id_Profissional+' = '+childData.prof_id);
+                                //alert('childData.prof_id = '+childData.prof_id);
+                               // alert('childData.prof_name = '+childData.prof_name);
+                                var alterarRef = firebase.database().ref('users/'+childData.user_id);
+                                alterarRef.update({
+                                    url: downloadURL,
+                                    image_name:selectedFile.name
+                            });
+                          }
+                      });
+                      //buscarDadosDaImagemAntiga();
+                    });
+}
+    
+function buscarDadosDaImagemAntiga(){
+    var pesquisarRef = firebase.database().ref('users/');
+                    pesquisarRef.once('value', function(snapshot){
+                    snapshot.forEach(function (childSnapshot){
+			var childKey = childSnapshot.key;
+			var childData = childSnapshot.val();
+                          
+                          if(childData.user_id===idcliente){
+                              //alert(id_Profissional+' = '+childData.prof_id);
+                              //alert('childData.prof_id = '+childData.prof_id);
+                              //alert('childData.prof_name = '+childData.prof_name);
+                              //alert('childData.prof_name = '+childData.url);
+                              //alert('childData.prof_name = '+childData.image_name);
+                              
+                              apagarImagemAntiga(childData.image_name);
+                          }
+                     });
+                      //apagarImagemAntiga();
+                 });
+}
+    
+    function apagarImagemAntiga(imagemAntiga){
+        //alert('imagemAntiga = '+imagemAntiga);
+        // Create a reference to the file to delete
+        var storage = firebase.storage();
+        var storageRef=storage.ref();
+        var imageRef = storageRef.child('images/'+imagemAntiga);
+            //alert('Passou por desertref');
+        // Delete the file
+        imageRef.delete().then(function() {
+          // File deleted successfully
+          //alert('Imagem Apagada...');
+        }).catch(function(error) {
+          // Uh-oh, an error occurred!
+          //alert('Imagem NAO APAGOU...');
+        });
+    }
+    
+</script>
+
+</body>
+</html>

@@ -1,0 +1,779 @@
+<!doctype html>
+<html>
+<head>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="index2.css"/>
+<meta charset="UTF-8">
+<title>Profissionais</title>
+<script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+
+</head>
+
+<body id="corpo">
+
+
+
+<header>
+    <div class="bloco">
+        <div class="bloco1">
+            <img id="logo" src="img/logo.png"/>
+        </div>
+        
+        <div class="bloco1" style="padding-top: 30px;padding-right: -30px; width: 350px;">
+        </div>
+
+    </div>
+</header>
+
+<div class="blocoMenu">
+    <div>
+        <a href="index.html"><button type="button">Home</button></a>
+    </div>
+    <div>
+        <a href="criardiaespecial.html"><button type="button">Criar dia Especial</button></a>
+    </div>
+    <div>
+        <a href="listardiasrspeciais.html"><button type="button">Listar dias Especiais</button></a>
+    </div>
+    
+</div>
+<div class="blocoLista">
+        <p><span id="spanIfoProf">Alterar Dados do Dia Especial</span></p>
+</div>
+
+<div style="font-size: 22px; width: 630px; height: auto; font-family: 'Righteous', cursive;
+    margin: 1px auto 15px auto;">    
+    <table id="tblincluir">			
+        <tr>
+            <td>Nome do Evento: </td>
+            <td><input type="text" class="texto" id="nome_evento" maxlength="30"/></td>
+         </tr>
+         <tr>
+            <td>Data: </td>
+            <td><input type="date"  class="texto" id="data_evento_txt" style="width: 190px; height: 30px;"></td>
+         </tr>
+         <tr>
+             <td><p>Hora de Início::</p></td>
+             <td>
+                <select id="horaDeInicio" class="texto" style="font-size: 15px; width: 200px; text-align: center;">
+                    <option value=1>05:00</option>
+                        <option value=2>05:15</option>
+                        <option value=3>05:30</option>
+                        <option value=4>05:45</option>
+                        <option value=5>06:00</option>
+                        <option value=6>06:15</option>
+                        <option value=7>06:30</option>
+                        <option value=8>06:45</option>
+                        <option value=9>07:00</option>
+                        <option value=10>07:15</option>
+                        <option value=11>07:30</option>
+                        <option value=12>07:45</option>
+                        <option value=13>08:00</option>
+                        <option value=14>08:15</option>
+                        <option value=15>08:30</option>
+                        <option value=16>08:45</option>
+                        <option value=17>09:00</option>
+                        <option value=18>09:15</option>
+                        <option value=19>09:30</option>
+                        <option value=20>09:45</option>
+                        <option value=21>10:00</option>
+                        <option value=22>10:15</option>
+                        <option value=23>10:30</option>
+                        <option value=24>10:45</option>
+                        <option value=25>11:00</option>
+                        <option value=26>11:15</option>
+                        <option value=27>11:30</option>
+                        <option value=28>11:45</option>
+                        <option value=29>12:00</option>
+                        <option value=30>12:15</option>
+                        <option value=31>12:30</option>
+                        <option value=32>12:45</option>
+                        <option value=33>13:00</option>
+                        <option value=34>13:15</option>
+                        <option value=35>13:30</option>
+                        <option value=36>13:45</option>
+                        <option value=37>14:00</option>
+                        <option value=38>14:15</option>
+                        <option value=39>14:30</option>
+                        <option value=40>14:45</option>
+                        <option value=41>15:00</option>
+                        <option value=42>15:15</option>
+                        <option value=43>15:30</option>
+                        <option value=44>15:45</option>
+                        <option value=45>16:00</option>
+                        <option value=46>16:15</option>
+                        <option value=47>16:30</option>
+                        <option value=48>16:45</option>
+                        <option value=49>17:00</option>
+                        <option value=50>17:15</option>
+                        <option value=51>17:30</option>
+                        <option value=52>17:45</option>
+                        <option value=53>18:00</option>
+                        <option value=54>18:15</option>
+                        <option value=55>18:30</option>
+                        <option value=56>18:45</option>
+                        <option value=57>19:00</option>
+                        <option value=58>19:15</option>
+                        <option value=59>19:30</option>
+                        <option value=60>19:45</option>
+                        <option value=61>20:00</option>
+                        <option value=62>20:15</option>
+                        <option value=63>20:30</option>
+                        <option value=64>20:45</option>
+                        <option value=65>21:00</option>
+                        <option value=66>21:15</option>
+                        <option value=67>21:30</option>
+                        <option value=68>21:45</option>
+                        <option value=69>22:00</option>
+                        <option value=70>22:15</option>
+                        <option value=71>22:30</option>
+                        <option value=72>22:45</option>
+                        <option value=73>23:00</option>
+                        <option value=74>23:15</option>
+                        <option value=75>23:30</option>
+                        <option value=76>23:45</option>
+                        <option value=77>24:00</option>
+                        <option value=78>24:15</option>
+                        <option value=79>24:30</option>
+                        <option value=80>24:45</option>
+                        <option value=81>1:00</option>
+                        <option value=82>1:15</option>
+                        <option value=83>1:30</option>
+                        <option value=84>1:45</option>
+                </select>
+            </td>
+         </tr>
+         <tr>
+             <td><p>Hora de Término:</p></td>
+             <td>
+                <select id="horaDeTermino" class="texto" onchange="checarHorarios();" style="font-size: 15px; width: 200px; text-align: center;">
+                    <option value=1>05:00</option>
+                        <option value=2>05:15</option>
+                        <option value=3>05:30</option>
+                        <option value=4>05:45</option>
+                        <option value=5>06:00</option>
+                        <option value=6>06:15</option>
+                        <option value=7>06:30</option>
+                        <option value=8>06:45</option>
+                        <option value=9>07:00</option>
+                        <option value=10>07:15</option>
+                        <option value=11>07:30</option>
+                        <option value=12>07:45</option>
+                        <option value=13>08:00</option>
+                        <option value=14>08:15</option>
+                        <option value=15>08:30</option>
+                        <option value=16>08:45</option>
+                        <option value=17>09:00</option>
+                        <option value=18>09:15</option>
+                        <option value=19>09:30</option>
+                        <option value=20>09:45</option>
+                        <option value=21>10:00</option>
+                        <option value=22>10:15</option>
+                        <option value=23>10:30</option>
+                        <option value=24>10:45</option>
+                        <option value=25>11:00</option>
+                        <option value=26>11:15</option>
+                        <option value=27>11:30</option>
+                        <option value=28>11:45</option>
+                        <option value=29>12:00</option>
+                        <option value=30>12:15</option>
+                        <option value=31>12:30</option>
+                        <option value=32>12:45</option>
+                        <option value=33>13:00</option>
+                        <option value=34>13:15</option>
+                        <option value=35>13:30</option>
+                        <option value=36>13:45</option>
+                        <option value=37>14:00</option>
+                        <option value=38>14:15</option>
+                        <option value=39>14:30</option>
+                        <option value=40>14:45</option>
+                        <option value=41>15:00</option>
+                        <option value=42>15:15</option>
+                        <option value=43>15:30</option>
+                        <option value=44>15:45</option>
+                        <option value=45>16:00</option>
+                        <option value=46>16:15</option>
+                        <option value=47>16:30</option>
+                        <option value=48>16:45</option>
+                        <option value=49>17:00</option>
+                        <option value=50>17:15</option>
+                        <option value=51>17:30</option>
+                        <option value=52>17:45</option>
+                        <option value=53>18:00</option>
+                        <option value=54>18:15</option>
+                        <option value=55>18:30</option>
+                        <option value=56>18:45</option>
+                        <option value=57>19:00</option>
+                        <option value=58>19:15</option>
+                        <option value=59>19:30</option>
+                        <option value=60>19:45</option>
+                        <option value=61>20:00</option>
+                        <option value=62>20:15</option>
+                        <option value=63>20:30</option>
+                        <option value=64>20:45</option>
+                        <option value=65>21:00</option>
+                        <option value=66>21:15</option>
+                        <option value=67>21:30</option>
+                        <option value=68>21:45</option>
+                        <option value=69>22:00</option>
+                        <option value=70>22:15</option>
+                        <option value=71>22:30</option>
+                        <option value=72>22:45</option>
+                        <option value=73>23:00</option>
+                        <option value=74>23:15</option>
+                        <option value=75>23:30</option>
+                        <option value=76>23:45</option>
+                        <option value=77>24:00</option>
+                        <option value=78>24:15</option>
+                        <option value=79>24:30</option>
+                        <option value=80>24:45</option>
+                        <option value=81>1:00</option>
+                        <option value=82>1:15</option>
+                        <option value=83>1:30</option>
+                        <option value=84>1:45</option>
+                </select>
+            </td>
+         </tr>
+         <tr>
+            <td>Duração: </td>
+            <td>
+                <input type="radio" name="periodo" value="15 Minutos" id="15Minutos" checked/>&nbsp;<label for="15Minutos">15 Minutos</label>&nbsp; &nbsp;<br>
+                <input type="radio" name="periodo" value="30 Minutos" id="30Minutos"/>&nbsp;<label for="30Minutos">30 Minutos</label><br>
+                <input type="radio" name="periodo" value="45 Minutos" id="45Minutos"/>&nbsp;<label for="45Minutos">45 Minutos</label><br>
+                <input type="radio" name="periodo" value="1 Hora" id="1Hora"/>&nbsp;<label for="1Hora">1 Hora</label><br>
+                <input type="radio" name="periodo" value="1 Hora e 30" id="1HoraE30"/>&nbsp;<label for="1HoraE30">1 Hora e 30</label><br>
+                <input type="radio" name="periodo" value="2 Horas" id="2Horas"/>&nbsp;<label for="2Horas">2 Horas</label>
+            </td>
+	</tr>
+        <tr>
+            <td>Valor: </td>
+            <td>€<input type="number" class="texto" id="valor" min='0.00' max='1000.00' step='0.05' style="width:100px;" onchange="changeValor();"/></td>
+         </tr>
+         <tr>
+            <td>Cabeçalho: </td>
+            <td><input type="text" class="texto" id="cabecalho_evento" maxlength="50"/></td>
+         </tr>
+         <tr>
+            <td>Texto Principal: </td>
+            <td><input type="text" class="texto" id="textoprincipal_evento" maxlength="100"/></td>
+         </tr>
+         <tr>
+            <td>Texto Secundário: </td>
+            <td><input type="text" class="texto" id="textosecundario_evento" maxlength="100"/></td>
+         </tr>
+         <tr>
+            <td>Rodapé: </td>
+            <td><input type="text" class="texto" id="rodape_evento" maxlength="50"/></td>
+         </tr>
+         
+    </table>
+</div>
+
+<div style="text-align: center; font-size: 22px; width: 520px; height: auto; font-family: 'Righteous', cursive;
+    margin: 1px auto 15px auto;">    
+    <span>
+        Inclua uma imagem do Dia Especial:
+    </span>
+</div>
+
+    <div class="incluirProfDentro1" style="height: 280px;">
+    <div>
+        <img src="" style=" margin-left: auto; margin-right: auto;" height="200" id="image">
+        <input type="file" id="file" onchange="showImage.call(this)" hidden ="hidden" />
+        <div class="blocoImagem">
+            <span id="custom_text" style="margin-left: 0px; margin-top: 0px;">Nenhuma imagem escolhida ainda.</span>
+        </div>
+        <button type="button" id="custom_button" style="margin-top: 25px; margin-left: 110px;">Escolha uma Imagem</button>
+<!--        <button type="button" id="custom_btn" style="margin-top: 20px; margin-left: 110px;">Escolha uma Imagem</button>-->
+    </div> 
+</div>
+
+<div id="progressBar">
+    <p id="textoProgresso" style="text-align: center; height: 5px;"></p>
+        <div style="text-align: center; margin-top: -21px;"  id="progresso">
+                 
+        </div>
+</div>
+    
+<div style="text-align: center; font-size: 22px; width: 520px; height: auto; font-family: 'Righteous', cursive;
+    margin: 1px auto 15px auto;">    
+    <div class="incluirProfDentro2">
+        <button type="button" style="margin-top: 20px; margin-left: 14px" id="btnSalvar" onclick="pre_save_user();">Salvar</button>
+    </div>
+</div>
+
+
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCRHDyxKv5kY3aq5LzLNlwrjqAxbtCEzuw",
+    authDomain: "salao15mingeral.firebaseapp.com",
+    databaseURL: "https://salao15mingeral.firebaseio.com",
+    projectId: "salao15mingeral",
+    storageBucket: "salao15mingeral.appspot.com",
+    messagingSenderId: "645464575134",
+    appId: "1:645464575134:web:a5fe8ce802fe35fd"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<!--<script src="alterarDiaEspecial.js"></script>-->
+<!--<script src="horariosalterarprof.js"></script>-->
+
+
+<script>
+    var valor=0;
+    
+    //ESTE SCRIPT TEM COMO FINALIDADE BUSCAR DADOS DO PROFISSIONAL E MOSTRAR NA TELA
+    let diaEspecial = sessionStorage.getItem('diaEspecial');
+    let eventoId = sessionStorage.getItem('eventoId');
+    let eventoUrl = sessionStorage.getItem('eventoUrl');
+
+    //alert("id_Profissional em alterarprof = "+id_Profissional);
+
+    var duracao="";
+    var dataDoEvento="";
+    var dataDoEvento2="";
+    var nome_imagem_antiga="";
+
+    buscarDadosDoProfissional();
+    function buscarDadosDoProfissional(){
+        //alert('buscarDadosDoProfissional');
+        var nome_evento = document.getElementById('nome_evento');
+        var data_evento_txt = document.getElementById('data_evento_txt');
+        var horaDeInicio = document.getElementById('horaDeInicio');
+        var horaDeTermino = document.getElementById('horaDeTermino');
+        var Minutos15 = document.getElementById('15Minutos');
+        var Minutos30 = document.getElementById('30Minutos');
+        var Minutos45 = document.getElementById('45Minutos');
+        var UmaHora = document.getElementById('1Hora');
+        var UmaHoraE30 = document.getElementById('1HoraE30');
+        var DuasHoras = document.getElementById('2Horas');
+        var cabecalho_evento = document.getElementById('cabecalho_evento');
+        var textoprincipal_evento = document.getElementById('textoprincipal_evento');
+        var textosecundario_evento = document.getElementById('textosecundario_evento');
+        var rodape_evento = document.getElementById('rodape_evento');
+        var valor = document.getElementById('valor');
+        //nomeprofissional.innerHTML="jjjj";
+        var profissionalRef = firebase.database().ref('eventos/');
+        profissionalRef.once('value', function(snapshot){
+            snapshot.forEach(function (childSnapshot){
+
+                var childKey = childSnapshot.key;
+                var childData = childSnapshot.val();
+
+                if(diaEspecial===childData.nome_evento){
+                    nome_evento.value=childData.nome_evento;
+                    //dataDoEvento=childData.data_evento.split("-");
+                    dataDoEvento=childData.data_evento_txt;
+                    //let data = new Date(dataDoEvento[0], dataDoEvento[1]-1, dataDoEvento[2]);
+                    //console.log( data.toString() );
+                    //console.log( data.toLocaleDateString("pt-BR") );
+                    //data_evento_txt.innerHTML=data.toLocaleDateString("pt-BR");
+                    data_evento_txt.value=childData.data_evento;
+                    //dataDoEvento2=data.toLocaleDateString("pt-BR");
+                    horaDeInicio.value=childData.hora_inicio;
+                    horaDeTermino.value=childData.hora_termino;
+                    duracao=childData.duracao;
+                    if(childData.duracao==="15 Minutos"){
+                        Minutos15.checked=true
+                        Minutos30.checked=false;
+                        UmaHora.checked=false;
+                        UmaHoraE30.checked=false;
+                        DuasHoras.checked=false;
+                    }
+                    if(childData.duracao==="30 Minutos"){
+                        Minutos15.checked=false
+                        Minutos30.checked=true;
+                        UmaHora.checked=false;
+                        UmaHoraE30.checked=false;
+                        DuasHoras.checked=false;
+                    }
+                    if(childData.duracao==="45 Minutos"){
+                        Minutos15.checked=false
+                        Minutos30.checked=false;
+                        Minutos45.checked=true;
+                        UmaHora.checked=false;
+                        UmaHoraE30.checked=false;
+                        DuasHoras.checked=false;
+                    }
+                    if(childData.duracao==="1 Hora"){
+                        Minutos15.checked=false
+                        Minutos30.checked=false;
+                        UmaHora.checked=true;
+                        UmaHoraE30.checked=false;
+                        DuasHoras.checked=false;
+                    }
+                    if(childData.duracao==="1 Hora e 30"){
+                        Minutos15.checked=false
+                        Minutos30.checked=false;
+                        UmaHora.checked=false;
+                        UmaHoraE30.checked=true;
+                        DuasHoras.checked=false;
+                    }
+                    if(childData.duracao==="2 Horas"){
+                        Minutos15.checked=false
+                        Minutos30.checked=false;
+                        UmaHora.checked=false;
+                        UmaHoraE30.checked=false;
+                        DuasHoras.checked=true;
+                    }
+                    duracao.value=childData.duracao;
+                    
+                    cabecalho_evento.value=childData.cabecalho_evento;
+                   
+                    textoprincipal_evento.value=childData.textoprincipal_evento;
+                    textosecundario_evento.value=childData.textosecundario_evento;
+                    rodape_evento.value=childData.rodape_evento;
+                    nome_imagem_antiga=childData.image_name;
+                    valor.value=childData.valor;
+                }
+            });
+        });
+        //alert('finalizou js');
+    }
+
+    
+    
+//INICIO DA AREA QUE CUIDA DOS DADOS DEPOIS DE MOSTRADOS INICIALMENTE NA TELA
+//alert('script');
+document.getElementById('btnSalvar').disabled = true;
+
+document.getElementById("nome_evento").focus();
+
+//let diaEspecial = sessionStorage.getItem('diaEspecial');
+
+var el = document.getElementById("progresso");
+var txtprogress = document.getElementById("textoProgresso");
+var width = 1;
+document.getElementById('progressBar').style.display = "none";
+
+
+inserirImagemAntiga();
+function inserirImagemAntiga(){
+        //alert('inserirImagemAntiga()');
+        var image = document.getElementById("image");
+        image.src = eventoUrl;
+        image.style.display = "block";
+}
+
+function changeValor(){
+        var valorDigitado = document.getElementById("valor").value;
+        valor = Number(valorDigitado).toFixed(2);
+        //alert("valor = "+valor);
+        //var valorToString = valor.toString();
+        //alert("valorToString = "+valorToString);
+        //var valorShow = "€"+valorToString;
+        //alert("valorShow = "+valorShow);
+        document.getElementById("valor").value=valor;
+    }
+
+//Area referente ao botao de upload de imagem
+const realFileBtn = document.getElementById('file');
+const customBtn = document.getElementById('custom_button');
+const customTxt = document.getElementById('custom_text');
+
+customBtn.addEventListener("click", function(){
+    realFileBtn.click();
+});
+realFileBtn.addEventListener("change", function(){
+    if(realFileBtn.value){
+        customTxt.innerHTML=realFileBtn.value.match();
+    }else{
+        customTxt.innerHTML="Arquivo ainda não encontrado.";
+    }
+});
+
+function pre_save_user(){
+    
+        var nome_evento = document.getElementById('nome_evento').value;
+        
+        var horaDeInicio = document.getElementById('horaDeInicio').value;
+        var horaDeTermino = document.getElementById('horaDeTermino').value;
+        
+    if(!nome_evento && horaDeInicio<horaDeTermino ){
+        alert('Nome e Horários precisam ser preenchidos!');
+        
+    }else{
+        uploadFile();
+    }
+}
+	
+function save_user(){
+            //alert('SAVE USER');
+            
+    //alert('duracao = '+duracao);
+            
+    document.getElementById('progressBar').style.display = "block";
+            
+    var nome_evento = document.getElementById('nome_evento').value;
+    var data_evento = document.getElementById('data_evento_txt').value;
+//    if(!data_evento){
+//        data_evento=dataDoEvento2;
+//    }else{
+//        data_evento=document.getElementById('data_evento_txt').innerHTML;
+//        //data_evento=data_evento.split("-");
+//    }
+    var horaDeInicio = document.getElementById('horaDeInicio').value;
+    var horaDeTermino = document.getElementById('horaDeTermino').value;
+    
+    var Minutos15 = document.getElementById('15Minutos');
+    var Minutos30 = document.getElementById('30Minutos');
+    var Minutos45 = document.getElementById('45Minutos');
+    var UmaHora = document.getElementById('1Hora');
+    var UmaHoraE30 = document.getElementById('1HoraE30');
+    var DuasHoras = document.getElementById('2Horas');
+    
+    if(Minutos15.checked){
+        duracao="15 Minutos";
+    }
+    if(Minutos30.checked){
+        duracao="30 Minutos";
+    }
+    if(Minutos45.checked){
+        duracao="45 Minutos";
+    }
+    if(UmaHora.checked){
+        duracao="1 Hora";
+    }
+    if(UmaHoraE30.checked){
+        duracao="1 Hora e 30";
+    }
+    if(DuasHoras.checked){
+        duracao="2 Horas";
+    }
+    
+    var cabecalho_evento = document.getElementById('cabecalho_evento').value;
+    var textoprincipal_evento = document.getElementById('textoprincipal_evento').value;
+    var textosecundario_evento = document.getElementById('textosecundario_evento').value;
+    var rodape_evento = document.getElementById('rodape_evento').value;
+    
+    var updateRef = firebase.database().ref('eventos/'+eventoId);
+    updateRef.update({
+        cabecalho_evento: cabecalho_evento,
+        data_evento: data_evento,
+        duracao: duracao,
+        hora_inicio: horaDeInicio,
+        hora_termino: horaDeTermino,
+        nome_evento: nome_evento,
+        rodape_evento: rodape_evento,
+        textoprincipal_evento: textoprincipal_evento,
+        textosecundario_evento: textosecundario_evento,
+        valor: valor,
+        valor_rec:"",
+        valor_rec_data:"",
+        valor_rec_desconto:"",
+        compareceu: false,
+        pagou: false
+    });
+    reset_campos();
+}
+                 
+        
+    
+    
+	function reset_campos(){
+		
+                	document.getElementById('nome_evento').value = "";
+                document.getElementById('data_evento_txt').value = "";
+                document.getElementById('horaDeInicio').value=0;
+                document.getElementById('horaDeTermino').value=0;
+                document.getElementById('valor').value=0;
+                
+                document.getElementById('15Minutos').checked=true;
+                document.getElementById('30Minutos').checked=false;
+                document.getElementById('45Minutos').checked=false;
+                document.getElementById('1Hora').checked=false;
+                document.getElementById('1HoraE30').checked=false;
+                document.getElementById('2Horas').checked=false;
+                
+                document.getElementById('cabecalho_evento').value = "";
+                document.getElementById('textoprincipal_evento').value = "";
+                document.getElementById('textosecundario_evento').value = "";
+                document.getElementById('rodape_evento').value = "";
+                
+                document.getElementById('progressBar').style.display = "none";
+                document.getElementById('image').src = "img/semimagem.png";
+                 
+                 //reload_page();
+	
+	}
+	
+	function reload_page(){
+		//window.location.replace('http://localhost:8383/Salao/incluirprof.html');
+                window.location="profissionais.html";
+	}
+        
+        //ESTA SECTION GRAVA DADOS DO PROFISSIONAL EM ESPECIALIDADES
+        
+        
+        
+var flag=0;
+function showImage(){
+    if(this.files && this.files[0]){
+        
+        //apagarPostAntigo();
+        //apagarImagemAntiga();
+        var obj = new FileReader();
+        obj.onload = function(data){
+            var image = document.getElementById("image");
+            image.src = data.target.result;
+            image.style.display = "block";
+            flag=1;
+            //alert('IMAGEM MUDOU');
+        };
+        obj.readAsDataURL(this.files[0]);
+    }else{
+        flag=0;
+    }
+}
+        
+        
+var selectedFile;
+$("#file").on("change", function(event){
+    $("#upload_btn").show(); 
+    selectedFile = event.target.files[0];
+});
+        
+        
+        
+//var nomeProfissional = sessionStorage.getItem('nomeProfissional');
+//alert('nomeProfissional = '+nomeProfissional);
+
+function uploadFile(profId, prof_name){
+    save_user();
+    if(flag===1){
+        //alert("profissionalUrl EM UPLOADFILE = "+profissionalUrl+"");
+            
+    //alert('profId = ' + profId + 'prof_name = '+ prof_name);
+    var fileName = selectedFile.name;
+    var storageRef = firebase.storage().ref('/images/' + fileName);
+    var uploadTask = storageRef.put(selectedFile);
+            
+    uploadTask.on('state_changed', function(snapshot){
+       // Observe state change events such as progress, pause, and resume
+       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+       document.getElementById('progressBar').style.display = "block";
+       var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+       console.log('Upload is ' + progress + '% done');
+       txtprogress.innerHTML=""+progress.toFixed(0)+"% concluído";
+       //el.style.width = progress + '% done';
+       el.style.width = ""+progress+"%";
+       switch (snapshot.state) {
+           case firebase.storage.TaskState.PAUSED: // or 'paused'
+               console.log('Upload is paused');
+               break;
+           case firebase.storage.TaskState.RUNNING: // or 'running'
+               console.log('Upload is running');
+               break;
+           }
+           }, function(error) {
+           // Handle unsuccessful uploads
+           }, function() {
+           // Handle successful uploads on complete
+           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+           uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+               console.log('File available at', downloadURL);
+               sessionStorage.setItem('downloadURL',downloadURL);
+               if(el.style.width==="100%"){
+                       //alert('dentro do if');
+                       document.getElementById('progressBar').style.display = "none";
+                       //document.getElementById('image').src = "img/semimagem.png";
+                   }else{
+                       alert('Upload de imagem falhou...');
+                   }
+               el.style.width = "0%";
+               alert('Upload de Imagem Bem Sucedido.');
+               
+               reset_campos();
+               
+               buscarDadosDoPost();
+                   
+                });
+                
+            });buscarDadosDaImagemAntiga();
+    }else{
+        //alert('IMEGEM NAO MUDOU');
+    }
+}
+
+function buscarDadosDoPost(){
+    var pesquisarRef = firebase.database().ref('eventos/'+eventoId);
+                    pesquisarRef.once('value', function(snapshot){
+                    snapshot.forEach(function (childSnapshot){
+			var childKey = childSnapshot.key;
+			var childData = childSnapshot.val();
+                          
+                          var downloadURL = sessionStorage.getItem('downloadURL');
+                          
+                                var alterarRef = firebase.database().ref('eventos/'+eventoId);
+                                alterarRef.update({
+                                    url: downloadURL,
+                                    image_name:selectedFile.name
+                            });
+
+                      });
+                      //alert('downloadURL = '+downloadURL);
+                      //alert('selectedFile.name = '+selectedFile.name);
+                      //buscarDadosDaImagemAntiga();
+                    });
+                    //alert('nome_imagem_antiga = '+nome_imagem_antiga);
+}
+    
+function buscarDadosDaImagemAntiga(){
+    var pesquisarRef = firebase.database().ref('eventos/'+eventoId);
+                    pesquisarRef.once('value', function(snapshot){
+                    snapshot.forEach(function (childSnapshot){
+			var childKey = childSnapshot.key;
+			var childData = childSnapshot.val();
+                         
+                         apagarImagemAntiga(nome_imagem_antiga);
+                         //alert('o nome da imagem para apagar é: '+nome_imagem_antiga);
+                     });
+                      //apagarImagemAntiga();
+                 });
+}
+    
+    function apagarImagemAntiga(imagemAntiga){
+        //alert('imagemAntiga = '+imagemAntiga);
+        // Create a reference to the file to delete
+        var storage = firebase.storage();
+        var storageRef=storage.ref();
+        var imageRef = storageRef.child('images/'+imagemAntiga);
+            //alert('Passou por desertref');
+        // Delete the file
+        imageRef.delete().then(function() {
+          // File deleted successfully
+          //alert('Imagem Apagada...');
+        }).catch(function(error) {
+          // Uh-oh, an error occurred!
+          //alert('Imagem NAO APAGOU...');
+        });
+    }
+    
+function checarHorarios(){
+        var hora_inicio = parseInt(document.getElementById('horaDeInicio').value);
+        var hora_termino = parseInt(document.getElementById('horaDeTermino').value);
+        if(hora_inicio>hora_termino){
+            alert('Horário de Término tem que ser maiór que horário de Início');
+            document.getElementById('horaDeTermino').value=0;
+        }
+        //alert('checarHorarios()');
+    }
+    
+    //console.log('geteArrayspecialidadesInicial');
+    //console.log(geteArrayspecialidadesInicial);
+    //console.log('geteArrayspecialidadesFinal');
+    //console.log(geteArrayspecialidadesFinal);
+
+window.onload = function() {
+      //initApp();
+      document.getElementById('btnSalvar').disabled = false;
+};
+</script>
+
+</body>
+</html>

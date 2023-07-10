@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<link rel="stylesheet" href="testesReferenceFirebase.css"/>-->
+    <style>
+        body{
+            font-family: sans-serif;
+            background-color: #F5F5DC;
+        }
+        main{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        main > img {
+            height: 200px;
+            margin: 5px;
+        }
+    </style>
+    
+</head>
+<body>
+<script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
+<script>
+// Initialize Firebase
+    var config = {
+    apiKey: "AIzaSyA7esqF9XJmNTqW99Z5K888zXdrsOEFKYM",
+    authDomain: "fir-weblearning.firebaseapp.com",
+    databaseURL: "https://fir-weblearning.firebaseio.com",
+    projectId: "fir-weblearning",
+    storageBucket: "fir-weblearning.appspot.com",
+    messagingSenderId: "30959349955"
+    };
+firebase.initializeApp(config);	
+</script>
+
+<templet>
+    <div class="hello">
+        <input type="file" @change="onFileSelected">
+        
+    </div>
+</templet>
+
+<script>
+    alert('oi');
+export default{
+        name: 'HelloWoeld',
+        data(){
+            return{
+                msg: 'Welcome to the World'
+            }
+        },
+        methods:{
+            onFileSelected(event){
+                console.log(event)
+            }
+        }
+}
+</script>
+
+</body>
+    
+
+</html>

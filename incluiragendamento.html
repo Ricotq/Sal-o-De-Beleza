@@ -1,0 +1,275 @@
+<!doctype html>
+<html>
+<head>
+
+<link rel="stylesheet" href="index2.css"/>
+<meta charset="UTF-8">
+<title>Salão</title>
+<script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+<!--<script src="incluiragendamento.js"></script>-->
+
+</head>
+
+<body>
+
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCRHDyxKv5kY3aq5LzLNlwrjqAxbtCEzuw",
+    authDomain: "salao15mingeral.firebaseapp.com",
+    databaseURL: "https://salao15mingeral.firebaseio.com",
+    projectId: "salao15mingeral",
+    storageBucket: "salao15mingeral.appspot.com",
+    messagingSenderId: "645464575134",
+    appId: "1:645464575134:web:a5fe8ce802fe35fd"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<header>
+    <div class="bloco">
+        <div class="bloco1">
+            <img id="logo" src="img/logo.png"/>
+        </div>
+        
+        <div class="bloco1" style="padding-top: 30px;padding-right: -30px; width: 350px;">
+        </div>
+
+    </div>
+</header>
+    <div class="blocoMenu">
+        <div class="btn">
+            <a href="index.html"><button type="button">Home</button></a>
+        </div>
+        <div class="btn">
+            <a href="pesquisaragendamento.html"><button type="button">Pesquisar Agenda</button></a>
+        </div>
+        <div class="btn"  id="principal">
+            
+        </div>
+    </div>
+    <div class="bloco">
+        <h2>Escolha a especialidade:  
+            <select id="select" onchange="limparTabela()">
+                <option value="">----------Servico----------</option>
+            </select>
+        </h2>
+        <!--<table id="tb_imagem">
+            <tr id="tr_img">
+                <td id="td_img">
+                    
+                </td>
+            </tr>
+        </table>-->
+            
+    </div>
+<script>
+    let nome_usuario = sessionStorage.getItem('nome_usuario');
+    document.getElementById('principal').innerHTML = "<span style='font-size: 28px; margin-left: 150px;'>Marcando agenda para cliente "+nome_usuario+".</span>";
+
+    
+    var flagLimparTabel=0;
+    var qtyDivs=0;
+    
+    //  --- Codigo para carregar itens no select ---
+    var arr = [];
+    
+    var populateRef = firebase.database().ref('especialidades/');
+    populateRef.once('value', function(snapshot){
+        snapshot.forEach(function (childSnapshot){
+        var childKey = childSnapshot.key;
+        var childData = childSnapshot.val();
+        var arr1=childData.espec_name;
+        pushArray(arr1);
+        });
+        carregarArray(arr);
+    });
+
+    function pushArray(itemDaLista){
+        arr.push(itemDaLista);
+        //alert('arr = '+ arr);
+    }
+
+    function carregarArray(array){
+        var select = document.getElementById("select");
+        for(var i = 0; i < array.length; i++){
+            var option = document.createElement("OPTION");
+            var txt = document.createTextNode(array[i]);
+            option.appendChild(txt);
+            option.setAttribute("value", arr[i]);
+            select.insertBefore(option, select.lastChild);
+        }
+    }
+    
+    
+    //   --- CODIGO PARA MOSTRAR IMAGEM E NOME DO PROFISSIONAL ESPECIFICO DA ESPECIALIDADE --
+    function limparTabela(){
+        chaveEscolhida=[];
+        nomeEscolhido=[];
+        //alert('limparTabela()');
+        ressetarEspecialidadesFiltradas();
+        if(flagLimparTabel===0){
+            //alert('flagLimparTabel ='+flagLimparTabel);
+            mostrarProfissionais();
+        }else{
+            //alert('ELSE');
+            //alert('ELSE qtyDivs ='+qtyDivs);
+            //var qtyDivs = sessionStorage.getItem('quantidadeDeDivs');
+            //alert('ELSE quantidadeDeDivs ='+quantidadeDeDivs);
+            for(var i=0; i<qtyDivs; i++){
+                //alert('i = '+i);
+                var divDelete = document.getElementById("block"+i);
+                divDelete.parentNode.removeChild(divDelete);
+                
+            }
+            mostrarProfissionais();
+        }
+        
+    }
+    
+    
+    function mostrarProfissionais(){
+        //alert('mostrarProfissionais()');
+        qtyDivs=0;
+        //alert('mostrarProfissionais() qtyDivs = '+qtyDivs);
+        flagLimparTabel=1;
+        var flag2='0';
+        var especiali = document.getElementById("select").value;
+        //alert('mostrarProfissionais()=> especiali ='+especiali);
+        sessionStorage.setItem('nome_especialidade',especiali);
+        
+        var ref = firebase.database().ref('especialidades/');
+        ref.once('value', function(snapshot){
+                snapshot.forEach(function (childSnapshot){
+                var childKey = childSnapshot.key;
+                var childData = childSnapshot.val();
+
+
+                //alert('especiali = '+ especiali + ' e childData.espec_name = '+childData.espec_name);
+                if (especiali===childData.espec_name){
+                    flag2 ='1';
+                    //alert('flag = '+ flag);
+                    var espec_id = childKey;
+                    //alert('childData.espec_cor = '+childData.espec_cor);
+                    sessionStorage.setItem('cor_especialidade',childData.espec_cor);
+                    sessionStorage.setItem('periodos',childData.periodos);
+                    sessionStorage.setItem('valor',childData.espec_valor);
+                    //alert('espec_id ='+espec_id +'childData.espec_name = '+childData.espec_name);
+                    especialidadesFiltradas(espec_id);
+                    //espec_nome.value = childData.espec_name;
+                    //populateTable(childKey,childData.espec_name);
+                    }
+                });
+                if (flag2==='0'){
+                alert('Especialidade não encontrado');
+            }
+            });
+    }
+    
+    var arrayProfissionaisEspecialidade = [];
+    function especialidadesFiltradas(espec_id){
+        //alert('1    espec_id ='+espec_id);
+        //var table = document.getElementById("tb_imagem");
+        var ref = firebase.database().ref('especialidades/').child(espec_id);
+        //var rowIndex = 1;
+        ref.once('value', function(snapshot){
+                snapshot.forEach(function (childSnapshot){
+                    var childKey = childSnapshot.key;
+                    var childData = childSnapshot.val();
+                    if(childData.prof_id){
+                        
+                        arrayProfissionaisEspecialidade.push(childData.prof_id);
+                        //alert('childData.espec_cor = '+childData.espec_cor);
+                        //alert('childData.prof_id = '+childData.prof_id);
+
+                    }
+                });
+                
+                //alert('2     arrayProfissionaisEspecialidade = '+arrayProfissionaisEspecialidade);
+                showProfissionais(arrayProfissionaisEspecialidade);
+            });
+            //ressetarEspecialidadesFiltradas();
+    }
+    
+    // ***** (arr) = prof_id *****
+    function showProfissionais(arr){
+        for(var i=0; i < arr.length; i++){
+            mostrarImagens(arr[i]);
+        }
+    }
+    var n=0;
+    var chaveEscolhida=[];
+    var nomeEscolhido=[];
+    function mostrarImagens(array){
+        
+        firebase.database().ref('/posts/').once('value').then(function(snapshot){
+            var postArray = snapshot.val();
+            var keys = Object.keys(postArray);
+            for(var i=0; i<array.length; i++){
+                var currentObject = postArray[keys[i]];
+                
+                if (currentObject.prof_id===array){
+                    
+                    var onediv = document.createElement('div');
+                    onediv.id="block"+n;
+                
+                    document.getElementsByTagName('body')[0].appendChild(onediv);
+                    var insideDiv = document.getElementById("block"+n);
+               
+                    insideDiv.innerHTML="<div class = 'block'> <table class='tabela' id='tb_imagem"+n+"'></div>";
+                
+                    var table = document.getElementById("tb_imagem"+n);
+                    table.width='840px';
+                
+                    var row = table.insertRow();
+                
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                
+                    var image = document.createElement("img");
+                    image.src = currentObject.url;
+                
+                
+                    cell1.innerHTML="<td><img src='"+currentObject.url+"' style='display: block' height='200' width='280' id='idimage'></td>";
+                    cell2.innerHTML ="<td><span width='200'>"+ currentObject.prof_name +"</span></td>";
+                    chaveEscolhida.push(currentObject.prof_id);
+                    //alert('chaveEscolhida = '+chaveEscolhida);
+                    nomeEscolhido.push(currentObject.prof_name);
+                    //alert('nomeEscolhido = '+nomeEscolhido);
+                    cell3.innerHTML = "<td><input type='button' id='btnprofissional"+n+"' class='divBotao' value='Selecionar' onClick='selecionar_prof("+n+");'/></td>";
+                    
+                    n++;
+                    qtyDivs=n;
+                    //alert('qtyDivs = '+n);
+                    //sessionStorage.setItem('quantidadeDeDivs',n);
+                }
+             }
+             
+        });
+        //alert('mostrarImagens(array)');
+        n=0;
+        //alert('n = '+n);
+        
+}
+function ressetarEspecialidadesFiltradas(){
+        arrayProfissionaisEspecialidade=[];
+    }
+//alert('quantidadeDeDivs que é o numero de divs FORA = '+quantidadeDeDivs);
+function selecionar_prof(n){
+                 //alert('selecionar_prof(key) = '+ key);
+                 sessionStorage.setItem('chave_profissional',chaveEscolhida[n]);
+                 //alert('chaveEscolhida = '+chaveEscolhida[n]);
+                 console.log(nomeEscolhido);
+                 sessionStorage.setItem('nome_profissional',nomeEscolhido[n]);
+                 //alert('nomeEscolhido = '+nomeEscolhido[n]);
+                 window.location="agendaprofissional.html";
+             }
+</script>
+</body>
+</html>
+
+
